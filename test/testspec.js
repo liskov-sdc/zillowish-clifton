@@ -17,7 +17,7 @@ const connection = mysql.createConnection({
 
 describe('Testing Database', () => {
   it('should have the correct data', function (){
-    connection.query('SELECT * from features limit 2', (err, results, field) => {
+    connection.query('SELECT * from features limit 2', (err, results) => {
       console.log(results[0].type)
       expect(results[0].id).to.equal(13);
       expect(results[0].type).to.be.a('string');

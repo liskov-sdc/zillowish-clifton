@@ -20,11 +20,11 @@ db.connect((err) => {
 });
 
 //function to load mock data
-const loadData = (callback) => {
+const loadFeatures = (callback) => {
   mockFeatures.forEach(house => {
-    let sql = 'INSERT into features (type, year_built, heating, cooling, parking, lot) VALUES (?,?,?,?,?,?)';
-    let params = [house.type,house.year_built,house.heating,house.cooling,house.parking,house.lot];
-      db.query(sql, params, (err, results, field) => {
+    let sql = 'INSERT into features (type, year_built, heating, cooling, parking, lot, days_on_zillow) VALUES (?,?,?,?,?,?,?)';
+    let params = [house.type, house.year_built, house.heating, house.cooling, house.parking, house.lot, house.days_on_zillow];
+      db.query(sql, params, (err, results) => {
         if (err) {
           console.log(err);
         } else {
@@ -43,7 +43,7 @@ const loadInterior = (callback) => {
         if (err) {
           console.log(err);
         } else {
-          console.log("mockInterior loaded");
+          console.log("mockInterior loaded", results);
         }
       });
   });
@@ -51,9 +51,9 @@ const loadInterior = (callback) => {
 
 
 const getFeatures = (id, callback) => {
-  let sqlQuery = 'SELECT * from features WHERE id = ?';
+  let sqlQuery = 'SELECT * from features WHERE house_id = ?';
   let params = [`${id}`];
-    db.query(sqlQuery, params, (err, results, field ) => {
+    db.query(sqlQuery, params, (err, results) => {
       if (err) {
         console.log(err);
       } else {
@@ -63,8 +63,9 @@ const getFeatures = (id, callback) => {
     });
   };
 
+  //function to seed the interior_features table with 100 mock data points for the interior features of the house
   const getInterior = (id, callback) => {
-    let sql = 'select * from interior_features where house_id = ?';
+    let sql = 'select * from interior_features where feature_id = ?';
     let params = [`${id}`];
     console.log("params:", params);
       db.query(sql, params, (err, results, field ) => {
@@ -78,7 +79,7 @@ const getFeatures = (id, callback) => {
     };
 
 module.exports = {
-  loadData,
+  loadFeatures,
   loadInterior,
   getFeatures,
   getInterior

@@ -2,6 +2,7 @@
 const mockFeatures = require('./mockFeatures');
 const mockInterior = require('./mockInterior');
 const mysql = require('mysql');
+const features = require('./createMockData');
 
 
 const db = mysql.createConnection({
@@ -21,14 +22,14 @@ db.connect((err) => {
 
 //function to load mock data
 const loadFeatures = (callback) => {
-  mockFeatures.forEach(house => {
+  features.createFeatures().forEach(house => {
     let sql = 'INSERT into features (type, year_built, heating, cooling, parking, lot, days_on_zillow) VALUES (?,?,?,?,?,?,?)';
     let params = [house.type, house.year_built, house.heating, house.cooling, house.parking, house.lot, house.days_on_zillow];
       db.query(sql, params, (err, results) => {
         if (err) {
           console.log(err);
         } else {
-          console.log("mockFeatures loaded");
+          console.log("mockFeatures loaded", results);
         }
       });
     });

@@ -83,6 +83,7 @@ module.exports = {
   loadFeatures,
   loadInterior,
   getFeatures,
-  getInterior
+  getInterior,
+  getBedBaths
 };
 

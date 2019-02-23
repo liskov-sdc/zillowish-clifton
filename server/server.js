@@ -47,9 +47,15 @@ app.get('/house/interior/:id', (req, res) => {
   });
 });
 
-app.get('/house/price/:id', (req, res) => {
-  data.getInterior
-})
+app.get('/house/features/:id', (req, res) => {
+  data.getBedBaths(req.params.id, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
 
 app.listen(port, () => {
   console.log(`listening on ${port}`);

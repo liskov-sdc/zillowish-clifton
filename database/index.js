@@ -79,6 +79,20 @@ const getFeatures = (id, callback) => {
       });
     };
 
+const getBedBaths = (id, callback) => {
+  let sql = 'select feature_id, bedrooms, bathrooms, sqft from interior_features where feature_id = ?';
+  let params = [`${id}`];
+  console.log("params:", params);
+    db.query(sql, params, (err, results, field ) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("results:",results);
+        callback(null, results);
+      }
+    });
+  };
+
 module.exports = {
   loadFeatures,
   loadInterior,

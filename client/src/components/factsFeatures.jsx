@@ -2,7 +2,6 @@ import React from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components'
-import './styleCSS/facts.css';
 import $ from 'jquery'
 import axios from 'axios'
 
@@ -15,64 +14,57 @@ const factLabel = {
   marginBottom: '0'
 };
 
-const Type = styled.section`
-    position: absolute;
-    left: 10px;  
-    width: 200px;
-    top: 83px;
-    height: 10px;
+const HouseIcon = styled.section `
+  position: absolute;
+  left: -50px;  
+  width: 200px;
+  top: 8px;
+  height: 10px;
 `;
 
-const HouseIcon = styled.section `
+const YearIcon = styled.section`
   display: inline-block
   position: absolute;
-  left: 10px;  
+  left: -35px;  
   width: 200px;
-  top: 5x;
+  top: 8px;
   height: 10px;
-  padding: 10px;
-`
-
-const YearBuilt = styled.section`
-    display: inline-block
-    position: absolute;
-    left: 135px;  
-    width: 200px;
-    top: 83px;
-    height: 10px;
 `;
 
-const Heating = styled.section`
-    position: absolute;
-    left: 250px;  
-    width: 200px;
-    top: 68px;
-    height: 10px;
+const CoolingIcon = styled.section`
+  position: absolute;
+  left: -50px;  
+  width: 200px;
+  top: 8px;
+  height: 10px;
 `;
 
-const Cooling = styled.section`
-    position: absolute;
-    left: 10px;  
-    width: 200px;
-    top: 142px;
-    height: 10px;
+const LotIcon = styled.section`
+  position: absolute;
+  left: -35px;  
+  width: auto;
+  top: 20px;
+  height: 10px;
+  display: inline-block;
 `;
 
-const Parking = styled.section`
-    position: absolute;
-    left: 135px;  
-    width: 200px;
-    top: 125px;
-    height: 10px;
+const HeatingIcon = styled.section`
+  position: absolute;
+  left: -100px;  
+  width: 200px;
+  top: 8px;
+  height: 10px;
 `;
 
-const Lot = styled.section`
+const ParkingIcon = styled.section`
     position: absolute;
-    left: 250px;  
+    left: -100px;  
     width: 200px;
-    top: 125px;
+    top: 8px;
     height: 10px;
+    
 `;
+
 
 
 class Facts_Features extends React.Component {
@@ -98,7 +90,7 @@ class Facts_Features extends React.Component {
       console.log(house);
         this.setState({
           type: house.type,
-          yearBuilt: house.year_built,
+          yearBuilt: "2003",
           heating: house.heating,
           cooling: house.cooling,
           parking: house.parking,
@@ -114,56 +106,43 @@ class Facts_Features extends React.Component {
     return (
      
       <div className="facts">
-
-        <Type>
-          <HouseIcon>
-            <FontAwesomeIcon icon="home" />
-          </HouseIcon>
-
+        <div className="type">
+          <HouseIcon> <FontAwesomeIcon icon="home" size="2x"/> </HouseIcon>
           <span style={factLabel}>Type</span> <br></br>
           {this.state.type}
-        </Type>
-    
-        <YearBuilt>
+        </div>
+     
           <div className ="yearbuilt">
-            <span style={factLabel}>Year Built</span> <br></br>
-            <FontAwesomeIcon icon= "calendar" />
+            <div style={factLabel}>Year Built</div> 
+            <YearIcon> <FontAwesomeIcon icon= "calendar" size="2x"/> </YearIcon>
             {this.state.yearBuilt}
           </div>
-        </YearBuilt>
-
-        <Heating>
-          <div>
-            <p style={factLabel}>Heating</p>
-              <FontAwesomeIcon icon="thermometer-half" />
+    
+          <div className="heating">
+            <div style={factLabel}>Heating</div>
+              <HeatingIcon> <FontAwesomeIcon icon="thermometer-half" size="2x" /> </HeatingIcon>
             {this.state.heating}
           </div>
-        </Heating>
-
-        <Cooling>
-          <div>
+         
+          <div className="cooling">
             <span style={factLabel}>Cooling</span> <br></br>
-            <FontAwesomeIcon icon="snowflake" />
+            <CoolingIcon> <FontAwesomeIcon icon="snowflake" size="2x"/> </CoolingIcon>
             {this.state.cooling}
           </div>
-        </Cooling>
-
-        <Parking>
-          <div>
-            <p style={factLabel}>Parking</p>
-            <FontAwesomeIcon icon="parking" />
+     
+          <div className="parking">
+            <div style={factLabel}>Parking</div>
+              <ParkingIcon> <FontAwesomeIcon icon="parking" size="2x"/> </ParkingIcon>
             {this.state.parking}
           </div>
-        </Parking>
-
-        <Lot>
-          <div>
+        
+          <div className="lot">
             <p style={factLabel}>Lot</p>
-            <FontAwesomeIcon icon="th-large" />
+            <LotIcon>
+              <FontAwesomeIcon icon="th-large" size="2x" />
+            </LotIcon>
             {this.state.lot}
           </div>
-        </Lot>
-     
       </div>
     )
   }

@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname+'/../client/dist'));
 
-app.get('/house', (req, res)=> {
+app.get('/house', (req, res) => {
   
   
   // data.loadFeatures((err, callback) => {

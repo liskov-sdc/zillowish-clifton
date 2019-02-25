@@ -3,10 +3,13 @@ module.exports = {
   module: {
     rules: [
       { 
-        test: [/\.jsx/],
+        test: [/\.jsx/, /\.css$/],
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loaders: [
+            'style-loader' ,'css-loader', 'babel-loader'
+           
+          ],
           options: {
             presets: ['@babel/preset-react', '@babel/preset-env']
           }

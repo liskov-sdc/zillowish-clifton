@@ -58,7 +58,6 @@ const getFeatures = (id, callback) => {
       if (err) {
         console.log(err);
       } else {
-        console.log("results:",results[0].type);
         callback(null, results);
       }
     });

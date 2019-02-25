@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const factFeatures = {
-  fontSize: "20px",
+  fontSize: "25px",
   lineHeight: "1.5",
   fontWeight: "700",
   color: "#444",

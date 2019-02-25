@@ -13,26 +13,17 @@ library.add( faHome, faSnowflake, faCalendar, faThermometerHalf, faParking, faTh
 class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      type:"",
-      yearBuilt: 2003,
-      heating: "",
-      cooling: "",
-      parking: "",
-      lot: ""
-    };
-
   }
-
 
   render() {
     return (
       <div>
-        
         <Facts/>
-        <Facts_Features>
-        </Facts_Features>
+        <Facts_Features />
+        <div className="interiorFeatures">
+          <InteriorFeatures />
+
+        </div>
       </div>
     )
   }

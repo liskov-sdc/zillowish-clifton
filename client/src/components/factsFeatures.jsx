@@ -16,7 +16,7 @@ const factLabel = {
 
 const HouseIcon = styled.section `
   position: absolute;
-  left: -50px;  
+  left: -55px;  
   width: 200px;
   top: 8px;
   height: 10px;
@@ -121,27 +121,25 @@ class Facts_Features extends React.Component {
           <div className="heating">
             <div style={factLabel}>Heating</div>
               <HeatingIcon> <FontAwesomeIcon icon="thermometer-half" size="2x" /> </HeatingIcon>
-            {this.state.heating}
+              {this.state.heating}
           </div>
          
           <div className="cooling">
             <span style={factLabel}>Cooling</span> <br></br>
-            <CoolingIcon> <FontAwesomeIcon icon="snowflake" size="2x"/> </CoolingIcon>
-            {this.state.cooling}
+              <CoolingIcon> <FontAwesomeIcon icon="snowflake" size="2x"/> </CoolingIcon>
+              {this.state.cooling}
           </div>
      
           <div className="parking">
             <div style={factLabel}>Parking</div>
               <ParkingIcon> <FontAwesomeIcon icon="parking" size="2x"/> </ParkingIcon>
-            {this.state.parking}
+                {this.state.parking}
           </div>
         
           <div className="lot">
             <p style={factLabel}>Lot</p>
-            <LotIcon>
-              <FontAwesomeIcon icon="th-large" size="2x" />
-            </LotIcon>
-            {this.state.lot}
+              <LotIcon> <FontAwesomeIcon icon="th-large" size="2x" /> </LotIcon>
+              {this.state.lot}
           </div>
       </div>
     )

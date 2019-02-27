@@ -67,8 +67,10 @@
   bottom: 10%;
 }
 
-/* .heat {
+.heat {
   position: absolute;
-  top: 10%;
+  bottom: 60%;
+  left: 250px;
+  width: 100%;
  
-} */
+}

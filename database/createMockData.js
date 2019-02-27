@@ -36,7 +36,7 @@ const get_random = function (array) {
  
  const createFeatures = (callback) => {
    var features = [];
-     for (let i = 0; i < 10; i++) {
+     for (let i = 0; i < 100; i++) {
        features.push({
          Type: get_random(houseFeatures.type),
          Year_Built: houseFeatures.year_built(1900,2006),
@@ -47,13 +47,12 @@ const get_random = function (array) {
          Price: "hello"
        });
      }
- 
    return features;
  };
  
  const createInteriorFeatures = (callback) => {
    var interiorFeatures = [];
-    for (let i = 0; i < 10;i++) {
+    for (let i = 0; i < 100; i++) {
        interiorFeatures.push(
          {
            Bedrooms: Math.round(Math.random() * 4),

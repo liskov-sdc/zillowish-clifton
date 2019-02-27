@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "build": "webpack -d --watch",
-    "start": "nodemon server/server.js"
+    "start": "nodemon server/server.js",
+    "db-seed": "node database/seedDatabase.js"
   },
   "author": "",
   "license": "ISC",
@@ -32,6 +33,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
+    "db-seed": "^1.2.0",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1"
   }

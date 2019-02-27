@@ -1,16 +1,15 @@
 import React from "react";
 import axios from 'axios';
-import styled from 'styled-components'
 
 const factFeatures = {
-    fontSize: '15px',
-    lineHeight: "1.5",
-    fontWeight: "700",
-    textTransform: "uppercase",
-    color: "#444",
-    borderTop: "1px solid #eee",
-    paddingTop: "15px",
-    marginBottom: "10px",
+  fontSize: '15px',
+  lineHeight: "1.5",
+  fontWeight: "700",
+  textTransform: "uppercase",
+  color: "#444",
+  borderTop: "1px solid #eee",
+  paddingTop: "15px",
+  marginBottom: "10px",
 };
 
 const interiorFeatures = {
@@ -42,6 +41,26 @@ class InteriorFeatures extends React.Component {
     };
   }
 
+  componentDidMount() {
+    axios(`http://localhost:3003/house/interior/3`)
+    .then(response => {
+      let house = response.data[0];
+      console.log(house);
+        this.setState({
+          beds: house.bedrooms,
+          heating: house.heating_cooling,
+          cooling: house.heating,
+          baths: house.bathrooms,
+          kitchen: house.kitchen,
+          appliances: house.appliances,
+          flooring: house.flooring +' sqft'
+        });
+      })
+      .catch( error => {
+        console.log(error);
+      });
+  }
+
  render() {
    return (
      <div className="interior">
@@ -66,7 +85,7 @@ class InteriorFeatures extends React.Component {
         <div style={interiorFeatures}>Kitchen</div>
           <div style={subFeatures}>KITCHEN FEATURES:</div>
             {this.state.kitchen}
-
+          
         <div style={interiorFeatures}>Flooring</div>
           <div style={subFeatures}>Floor Size: {this.state.flooring}</div>
        

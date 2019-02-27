@@ -83,7 +83,6 @@ class Facts_Features extends React.Component {
   }
 
   componentDidMount() {
-  
     axios(`http://localhost:3003/house/3`)
     .then(response => {
       let house = response.data[0];

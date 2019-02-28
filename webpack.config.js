@@ -6,13 +6,8 @@ module.exports = {
         test: [/\.jsx/, /\.css$/],
         exclude: /node_modules/,
         use: {
-          loaders: [
-            'style-loader' ,'css-loader', 'babel-loader'
-           
-          ],
-          options: {
-            presets: ['@babel/preset-react', '@babel/preset-env']
-          }
+          loader:  'babel-loader',
+          options: {presets: ['@babel/preset-react', '@babel/preset-env']}
         }
       }
     ]
@@ -22,5 +17,3 @@ module.exports = {
     path: __dirname + '/client/dist/'
   }
 };
-
-console.log("directory:",__dirname + '/client/dist');

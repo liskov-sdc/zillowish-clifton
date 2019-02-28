@@ -1,5 +1,5 @@
 const mock = require('./createMockData');
-const db = require('./index')
+const db = require('./index');
 
 
 db.loadFeatures((err)=> {

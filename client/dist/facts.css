@@ -1,0 +1,76 @@
+
+.facts {
+  border-style: 1px;
+}
+
+.yearbuilt  {
+    display: inline-block;
+    position: absolute;
+    left: 250px;  
+    width: 200px;
+    top: 83px;
+    height: 10px;
+}
+.heating {
+  position: absolute;
+  left: 500px;  
+  width: auto;
+  top: 83px;
+  height: 10px;
+  display: inline-block
+}
+
+.type {
+  position: absolute;
+  left: 75px;  
+  width: 200px;
+  top: 83px;
+  height: 10px;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.parking {
+    position: absolute;
+    left: 500px;  
+    width: 200px;
+    top: 140px;
+    height: 10px;
+    display: inline-block
+}
+
+.lot {
+    position: absolute;
+    left: 250px;  
+    width: 200px;
+    top: 125px;
+    height: 10px;
+    display: inline-block
+}
+
+.cooling {
+    position: absolute;
+    left: 70px;  
+    width: 200px;
+    top: 142px;
+    height: 10px;
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+.interior{
+  vertical-align: sub;
+}
+
+.interiorFeatures {
+  position: absolute;
+  bottom: 10%;
+}
+
+.heat {
+  position: absolute;
+  bottom: 60%;
+  left: 250px;
+  width: 100%;
+ 
+}

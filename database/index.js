@@ -2,13 +2,16 @@
 const mockFeatures = require('./mockFeatures');
 const mockInterior = require('./mockInterior');
 const mysql = require('mysql');
+const features = require('./createMockData');
+const fs = require('fs');
 
 
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'zillow'
+  database: 'zillow',
+  multipleStatements: true,
 });
 
 db.connect((err) => {
@@ -20,15 +23,16 @@ db.connect((err) => {
 });
 
 //function to load mock data
-const loadData = (callback) => {
+const loadFeatures = (callback) => {
+  // fs.writeFileSync('/Users/apple/Code/RPT11/zillowclone/database/mockfeature.json', JSON.stringify(features.createFeatures()));
   mockFeatures.forEach(house => {
-    let sql = 'INSERT into features (type, year_built, heating, cooling, parking, lot) VALUES (?,?,?,?,?,?)';
-    let params = [house.type,house.year_built,house.heating,house.cooling,house.parking,house.lot];
-      db.query(sql, params, (err, results, field) => {
+    let sql = 'INSERT into features (type, year_built, heating, cooling, parking, lot, days_on_zillow) VALUES (?,?,?,?,?,?,?)';
+    let params = [house.type, house.year_built, house.heating, house.cooling, house.parking, house.lot, house.days_on_zillow];
+      db.query(sql, params, (err, results) => {
         if (err) {
           console.log(err);
         } else {
-          console.log("mockFeatures loaded");
+          console.log("mockFeatures loaded", results);
         }
       });
     });
@@ -37,13 +41,13 @@ const loadData = (callback) => {
   //function to load interior mock JSON data
 const loadInterior = (callback) => {
   mockInterior.forEach(feature => {
-    let sql = 'INSERT into interior_features (bedrooms, bathrooms, heating_cooling, appliances, kitchen, flooring) VALUES (?,?,?,?,?,?)';
-    let params = [feature.bedrooms, feature.bathrooms, feature.heating_cooling, feature.appliances, feature.kitchen, feature.flooring];
-      db.query(sql, params, (err, results, field) => {
+    let sql = 'INSERT into interior_features (bedrooms, bathrooms, heating_cooling, appliances, kitchen, flooring, sqft) VALUES (?,?,?,?,?,?,?)';
+    let params = [feature.bedrooms, feature.bathrooms, feature.heating_cooling, feature.appliances, feature.kitchen, feature.flooring, feature.sqft];
+      db.query(sql, params, (err, results ) => {
         if (err) {
           console.log(err);
         } else {
-          console.log("mockInterior loaded");
+          console.log("mockInterior loaded", results);
         }
       });
   });
@@ -51,22 +55,21 @@ const loadInterior = (callback) => {
 
 
 const getFeatures = (id, callback) => {
-  let sqlQuery = 'SELECT * from features WHERE id = ?';
+  let sqlQuery = 'SELECT * from features WHERE house_id = ?';
   let params = [`${id}`];
-    db.query(sqlQuery, params, (err, results, field ) => {
+    db.query(sqlQuery, params, (err, results) => {
       if (err) {
         console.log(err);
       } else {
-        console.log("results:",results[0].type);
         callback(null, results);
       }
     });
   };
 
+  //function to seed the interior_features table with 100 mock data points for the interior features of the house
   const getInterior = (id, callback) => {
-    let sql = 'select * from interior_features where house_id = ?';
+    let sql = 'select * from interior_features where feature_id = ?';
     let params = [`${id}`];
-    console.log("params:", params);
       db.query(sql, params, (err, results, field ) => {
         if (err) {
           console.log(err);
@@ -77,10 +80,24 @@ const getFeatures = (id, callback) => {
       });
     };
 
+const getBedBaths = (id, callback) => {
+  let sql = 'select feature_id, bedrooms, bathrooms, sqft from interior_features where feature_id = ?';
+  let params = [`${id}`];
+    db.query(sql, params, (err, results, field ) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("results:",results);
+        callback(null, results);
+      }
+    });
+  };
+
 module.exports = {
-  loadData,
+  loadFeatures,
   loadInterior,
   getFeatures,
-  getInterior
+  getInterior,
+  getBedBaths
 };
 

@@ -1,8 +1,13 @@
 # zillowish-clifton
 clifton's portion
 
+Related Projects:
 
-So start this repo:
+http://github.com/zillowish-sadie
+http://github.com/zillowish-jessica
+
+
+To start this repo:
 
 Installing Dependencies:
 

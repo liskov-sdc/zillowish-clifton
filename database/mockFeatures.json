@@ -2,7 +2,7 @@
   {"type":"Multifamily","year_built":1948,"heating":"None","cooling":"Central","parking":"3 Spaces","lot":"8241","days_on_zillow":98},
   {"type":"Multifamily","year_built":1972,"heating":"Forced Air","cooling":"Air Condition","parking":"3 Spaces","lot":"27","days_on_zillow":4},
   {"type":"Shack","year_built":1981,"heating":"Forced Air","cooling":"Air Condition","parking":"4 Spaces","lot":"837","days_on_zillow":64},
-  {"type":"Shack","year_built":1971,"heating":"None","cooling":"None","parking":"4 Spaces","lot":"0","days_on_zillow":30},
+  {"type":"Shack","year_built":1971,"heating":"None","cooling":"None","parking":"4 Spaces","lot":"2340","days_on_zillow":30},
   {"type":"Single Family House","year_built":1900,"heating":"Central","cooling":"Air Condition","parking":"4 Spaces","lot":"995","days_on_zillow":65},
   {"type":"Shack","year_built":1907,"heating":"None","cooling":"Central","parking":"3 Spaces","lot":"6","days_on_zillow":37},
   {"type":"Shack","year_built":1936,"heating":"Forced Air","cooling":"Air Condition","parking":"1 Space","lot":"110","days_on_zillow":80},

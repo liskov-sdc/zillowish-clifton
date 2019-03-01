@@ -1,6 +1,7 @@
 
 .facts {
   border-style: 1px;
+  border-bottom: 1px
 }
 
 .yearbuilt  {
@@ -64,13 +65,35 @@
 
 .interiorFeatures {
   position: absolute;
-  bottom: 10%;
+  bottom: 40%;
 }
 
-.heat {
+.heat  {
   position: absolute;
-  bottom: 60%;
+  bottom: 45%;
   left: 250px;
   width: 100%;
  
+}
+ 
+.bedrooms {
+  float: 1px;
+}
+
+.appliances {
+  position: absolute;
+  bottom: 15%;
+  left: 250px;
+  width: 100%;
+}
+
+.flooring {
+  position: absolute;
+  bottom: -10%;
+  left: 250px;
+  width: 100%;
+}
+
+.bathroom {
+  position: relative;
 }

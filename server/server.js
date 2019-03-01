@@ -9,7 +9,7 @@ const features = require('../database/createMockData');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(__dirname+'/../client/dist'));
+app.use('/:id',express.static(__dirname+'/../client/dist'));
 
 app.get('/house', (req, res) => {
   // data.loadFeatures((err, callback) => {
@@ -31,6 +31,16 @@ app.get('/house/:id', (req, res) => {
     }
   });
 });
+
+// app.get('/:id', (req, res) => {
+//   data.getFeatures(req.params.id, (err, data) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.status(200).send(data);
+//     }
+//   });
+// });
 
 
 app.get('/house/interior/:id', (req, res) => {

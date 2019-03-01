@@ -41,9 +41,9 @@ const loadFeatures = (callback) => {
   //function to load interior mock JSON data
 const loadInterior = (callback) => {
   mockInterior.forEach(feature => {
-    let sql = 'INSERT into interior_features (bedrooms, bathrooms, heating_cooling, appliances, kitchen, flooring, sqft) VALUES (?,?,?,?,?,?,?)';
-    let params = [feature.bedrooms, feature.bathrooms, feature.heating_cooling, feature.appliances, feature.kitchen, feature.flooring, feature.sqft];
-      db.query(sql, params, (err, results ) => {
+    let sql = 'INSERT into interior_features (bedrooms, bathrooms, interiorheating, interiorcooling, appliances, kitchen, flooring, sqft) VALUES (?,?,?,?,?,?,?,?)';
+    let params = [feature.bedrooms, feature.bathrooms, feature.heating, feature.cooling, feature.appliances, feature.kitchen, feature.flooring, feature.sqft];
+      db.query(sql, params, (err, results) => {
         if (err) {
           console.log(err);
         } else {
@@ -53,7 +53,7 @@ const loadInterior = (callback) => {
   });
 };
 
-
+/////////////////////////Retreiving Facts and Features///////////////////////////
 const getFeatures = (id, callback) => {
   let sqlQuery = 'SELECT * from features WHERE house_id = ?';
   let params = [`${id}`];
@@ -66,11 +66,11 @@ const getFeatures = (id, callback) => {
     });
   };
 
-  //function to seed the interior_features table with 100 mock data points for the interior features of the house
+
   const getInterior = (id, callback) => {
     let sql = 'select * from interior_features where feature_id = ?';
     let params = [`${id}`];
-      db.query(sql, params, (err, results, field ) => {
+      db.query(sql, params, (err, results) => {
         if (err) {
           console.log(err);
         } else {

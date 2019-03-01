@@ -67,82 +67,48 @@ const ParkingIcon = styled.section`
 
 
 
-class Facts_Features extends React.Component {
-  constructor(props) {
-    super(props);
+const Facts_Features = (props) => {
 
-    this.state = {
-      type:"Single Family",
-      yearBuilt: 2003,
-      heating: "Forced Air",
-      cooling: "None",
-      parking: "1 Space",
-      lot: "2342"
-    };
-
-  }
-
-  componentDidMount() {
-    axios(`http://localhost:3003/house/3`)
-    .then(response => {
-      let house = response.data[0];
-      console.log(house);
-        this.setState({
-          type: house.type,
-          yearBuilt: "2003",
-          heating: house.heating,
-          cooling: house.cooling,
-          parking: house.parking,
-          lot: house.lot
-        });
-      })
-      .catch( error => {
-        console.log(error);
-      });
-  }
-
-  render() {
     return (
-     
       <div className="facts">
         <div className="type">
           <HouseIcon> <FontAwesomeIcon icon="home" size="2x"/> </HouseIcon>
           <span style={factLabel}>Type</span> <br></br>
-          {this.state.type}
+          {props.type}
         </div>
      
           <div className ="yearbuilt">
             <div style={factLabel}>Year Built</div> 
             <YearIcon> <FontAwesomeIcon icon= "calendar" size="2x"/> </YearIcon>
-            {this.state.yearBuilt}
+            {props.yearBuilt}
           </div>
     
           <div className="heating">
             <div style={factLabel}>Heating</div>
               <HeatingIcon> <FontAwesomeIcon icon="thermometer-half" size="2x" /> </HeatingIcon>
-              {this.state.heating}
+              {props.factsHeating}
           </div>
          
           <div className="cooling">
             <span style={factLabel}>Cooling</span> <br></br>
               <CoolingIcon> <FontAwesomeIcon icon="snowflake" size="2x"/> </CoolingIcon>
-              {this.state.cooling}
+              {props.factsCooling}
           </div>
      
           <div className="parking">
             <div style={factLabel}>Parking</div>
               <ParkingIcon> <FontAwesomeIcon icon="parking" size="2x"/> </ParkingIcon>
-                {this.state.parking}
+                {props.parking}
           </div>
         
           <div className="lot">
             <p style={factLabel}>Lot</p>
               <LotIcon> <FontAwesomeIcon icon="th-large" size="2x" /> </LotIcon>
-              {this.state.lot}
+              {props.lot}
           </div>
       </div>
     )
   }
-}
+
 
 export default Facts_Features

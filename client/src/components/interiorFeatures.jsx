@@ -29,18 +29,12 @@ const subFeatures = {
 const InteriorFeatures = (props)=> {
   
    return (
-     <div className="interior">
+     <div className="wrapper">
 
        <div className="bedrooms">
           <div style={factFeatures}>INTERIOR FEATURES</div>
           <div style={interiorFeatures}>Bedrooms</div>
-            <div style={subFeatures}>Beds: {props.beds}</div>
-        </div>
-
-        <div className="heat">
-          <div style={interiorFeatures}>Heating and Cooling</div>
-            <div style={subFeatures}>Heating: {props.heating}</div>
-            <div style={subFeatures}>Cooling: {props.cooling}</div>
+          <div style={subFeatures}>Beds: {props.beds}</div>
         </div>
 
         <div className="bathroom">
@@ -48,17 +42,26 @@ const InteriorFeatures = (props)=> {
           <div style={subFeatures}>Baths: {props.baths}</div>
         </div>  
 
-        <div className="appliances">
-          <div style={interiorFeatures}>Appliances</div>
-          <div style={subFeatures}>Appliances included:</div>
-            <div>{props.appliances} </div>
-        </div>
-
           <div className="kitchen">
             <div style={interiorFeatures}>Kitchen</div>
             <div style={subFeatures}>KITCHEN FEATURES:</div>
                 {props.kitchen}
           </div>
+  
+        <div className="interiorheat">
+            <div style={interiorFeatures}>Heating and Cooling</div>
+            <div style={subFeatures}>Heating: {props.heating}</div>
+            <div style={subFeatures}>Cooling: {props.cooling}</div>
+        </div>
+
+
+        <div className="appliances">
+          <div style={interiorFeatures}>Appliances</div>
+          <div style={subFeatures}>Appliances included:</div>
+          <div>{props.appliances} </div>
+        </div>
+
+      
 
         <div className="flooring">
           <div style={interiorFeatures}>Flooring</div>

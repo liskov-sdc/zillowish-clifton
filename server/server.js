@@ -10,19 +10,8 @@ const features = require('../database/createMockData');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
-app.use('/:id',express.static(__dirname+'/../client/dist'));
-
-app.get('/house', (req, res) => {
-  // data.loadFeatures((err, callback) => {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     callback(null)
-  //     res.send("success");
-  //   }
-  // });
-});
+app.use(cors({origin: 'http://localhost:3000'}));
+app.use(express.static(__dirname+'/../client/dist', {maxAge: 5000}));
 
 app.get('/house/:id', (req, res) => {
   data.getFeatures(req.params.id, (err, data) => {
@@ -34,16 +23,15 @@ app.get('/house/:id', (req, res) => {
   });
 });
 
-// app.get('/:id', (req, res) => {
-//   data.getFeatures(req.params.id, (err, data) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.status(200).send(data);
-//     }
-//   });
-// });
-
+app.get('/:id', (req, res) => {
+  data.getFeatures(req.params.id, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
 
 app.get('/house/interior/:id', (req, res) => {
   data.getInterior(req.params.id, (err, data) => {

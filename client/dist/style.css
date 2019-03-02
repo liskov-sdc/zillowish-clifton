@@ -1,0 +1,138 @@
+
+.facts {
+  display: grid;
+  grid-template-columns: 200px 200px 200px ;
+}
+
+.yearbuilt  {
+  
+    
+}
+.heating {
+  /* position: relative;
+  bottom: 50%;
+  display: inline-block */
+}
+
+.type {
+
+}
+
+.parking {
+    /* position: relative;
+    left: 500px;  
+    width: 200px;
+    top: 140px;
+    height: 10px;
+    display: inline-block */
+}
+
+.lot {
+    /* position: relative;
+    left: 250px;  
+    width: 200px;
+    top: 125px;
+    height: 10px;
+    display: inline-block */
+}
+
+
+/* //////////////INTERIOR FEATURES/////////////// */
+.cooling {
+    /* position: relative;
+    left: 70px;  
+    width: 200px;
+    top: 142px;
+    height: 10px;
+    display: inline-block;
+    vertical-align: baseline; */
+}
+
+
+
+.wrapper {
+ display: grid;
+ grid-template-columns: 200px 200px ;
+}
+
+.interiorFeatures {
+  /* position: absolute;
+  bottom: 20%; */
+}
+
+.bedrooms {
+  padding-bottom: 15px;
+ 
+}
+
+.interiorheat  {
+  display: inline-block;
+  padding-bottom: 15px;
+ 
+ 
+}
+
+.bathroom {
+  padding-bottom: 15px;
+}
+
+.appliances {
+  /* position: relative;
+  bottom: 15%;
+  left: 250px;
+  width: 100%; */
+  padding-bottom: 15px;
+  float: right;
+  height: 100px;
+}
+
+.kitchen {
+  padding-bottom: 15px;
+}
+
+.flooring {
+  /* position: relative;
+  bottom: -10%;
+  left: 250px;
+  width: 100%; */
+  padding-bottom: 15px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+/* fontawesome icons */
+.yearicon {
+  display: inline-block;
+  width: 120px;
+  height: 12px;
+  float: left;
+  vertical-align: center
+}
+
+.year {
+  display: inline-block;
+  width: 120px;
+  height: 12px;
+  vertical-align: middle
+}
+
+.typeicon {
+ 
+}
+
+.icon {
+  display: inline-block;
+  padding: 20px
+}

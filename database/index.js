@@ -74,7 +74,6 @@ const getFeatures = (id, callback) => {
         if (err) {
           console.log(err);
         } else {
-          console.log("results:",results);
           callback(null, results);
         }
       });
@@ -83,11 +82,10 @@ const getFeatures = (id, callback) => {
 const getBedBaths = (id, callback) => {
   let sql = 'select feature_id, bedrooms, bathrooms, sqft from interior_features where feature_id = ?';
   let params = [`${id}`];
-    db.query(sql, params, (err, results, field ) => {
+    db.query(sql, params, (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        console.log("results:",results);
         callback(null, results);
       }
     });

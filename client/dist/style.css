@@ -69,7 +69,6 @@
   display: inline-block;
   padding-bottom: 15px;
  
- 
 }
 
 .bathroom {
@@ -77,13 +76,8 @@
 }
 
 .appliances {
-  /* position: relative;
-  bottom: 15%;
-  left: 250px;
-  width: 100%; */
+
   padding-bottom: 15px;
-  float: right;
-  height: 100px;
 }
 
 .kitchen {
@@ -91,10 +85,7 @@
 }
 
 .flooring {
-  /* position: relative;
-  bottom: -10%;
-  left: 250px;
-  width: 100%; */
+
   padding-bottom: 15px;
 }
 
@@ -116,9 +107,8 @@
 .yearicon {
   display: inline-block;
   width: 120px;
-  height: 12px;
-  float: left;
-  vertical-align: center
+  height: 1200px;
+  
 }
 
 .year {
@@ -128,11 +118,13 @@
   vertical-align: middle
 }
 
-.typeicon {
- 
-}
 
 .icon {
   display: inline-block;
   padding: 20px
+}
+
+
+.button {
+  
 }

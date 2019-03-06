@@ -14,20 +14,20 @@ class App extends React.Component {
     super(props);
 
       this.state = {
-        type:"1",
+        type:"Single Family House",
         yearBuilt: 2000,
-        factsHeating: "1dummy",
-        factsCooling: "dummy",
+        factsHeating: "Central",
+        factsCooling: "A/C",
         parking: "12",
         lot: '89',
         //interior
         beds: 0,
-        heating: "dummy",
-        cooling: "dummy",
+        heating: "Super",
+        cooling: "None",
         baths: 0,
-        kitchen: "summy",
-        appliances: "dummy",
-        flooring: "dummy"
+        kitchen: "Garbage",
+        appliances: "Stove",
+        flooring: "summy"
     };
   }
 
@@ -38,7 +38,6 @@ class App extends React.Component {
     axios(`http://localhost:3003/house/${id}`)
     .then(response => {
       let house = response.data[0];
-      console.log(house);
         this.setState({
           type: house.type,
           yearBuilt: house.year_built,

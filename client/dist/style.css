@@ -5,7 +5,7 @@
 }
 
 .yearbuilt  {
-  
+  display: inline;
     
 }
 .heating {
@@ -15,7 +15,7 @@
 }
 
 .type {
-
+  display: inline-block;
 }
 
 .parking {
@@ -105,26 +105,21 @@
 
 /* fontawesome icons */
 .yearicon {
-  display: inline-block;
-  width: 120px;
-  height: 1200px;
+  /* display: inline-block;
+  width: 100px;
+  height: 1200px; */
   
 }
 
 .year {
   display: inline-block;
-  width: 120px;
+  width: 1300px;
   height: 12px;
-  vertical-align: middle
+  vertical-align: left;
 }
 
 
 .icon {
   display: inline-block;
-  padding: 20px
-}
-
-
-.button {
-  
+  padding: 10px
 }

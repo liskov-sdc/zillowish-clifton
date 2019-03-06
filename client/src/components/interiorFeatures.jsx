@@ -82,8 +82,6 @@ class InteriorFeatures extends React.Component {
           <div style={subFeatures}>Floor Size: <span style={interiorFeatures}>{this.props.flooring}</span> </div>
         </div>
        
-
-       
       </div>
       
      </div>

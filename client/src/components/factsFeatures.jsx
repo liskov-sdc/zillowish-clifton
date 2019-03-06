@@ -15,18 +15,17 @@ const Facts_Features = (props) => {
     return (
       <div className="facts">
 
-          <div>
+          <div id="type">
             <div style={factLabel}>Type</div> 
-              {props.type}
             <div className="icon"> <FontAwesomeIcon icon="home" size="2x"/> </div> 
+              {props.type}
           </div>
      
           <div className ="yearbuilt">
-              <div className="year">
                 <div style={factLabel}>Year Built</div> 
-                {props.yearBuilt}
                 <div className="yearicon"> <FontAwesomeIcon icon= "calendar" size="2x"/> </div> 
-              </div>
+                <div className="year">{props.yearBuilt}</div>
+                
           </div>
     
           <div className="heating">

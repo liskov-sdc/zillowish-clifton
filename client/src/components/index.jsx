@@ -38,6 +38,7 @@ class App extends React.Component {
     axios(`http://localhost:3003/house/${id}`)
     .then(response => {
       let house = response.data[0];
+      console.log(house);
         this.setState({
           type: house.type,
           yearBuilt: house.year_built,

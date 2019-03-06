@@ -3,14 +3,13 @@ const cors = require('cors');
 const app = express();
 const port = 3003;
 const bodyParser = require('body-parser');
-const path = require('path');
 const data = require('../database/index');
 const features = require('../database/createMockData');
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors({origin: 'http://localhost:3000'}));
+app.use(cors({origin: 'http://localhost:3003'}));
 app.use(express.static(__dirname+'/../client/dist', {maxAge: 5000}));
 
 app.get('/house/:id', (req, res) => {

@@ -1,28 +1,31 @@
 const mysql = require('mysql');
-const featuresTable = 'CREATE TABLE IF NOT EXISTS features (house_id int NOT NULL AUTO_INCREMENT, type varchar(255), year_built varchar (255), heating varchar (255), cooling varchar (255), parking varchar (255),lot varchar (255), days_on_zillow varchar (255), price_per_sqft varchar (255), PRIMARY KEY (house_id));'
-const interiorTable = 'CREATE TABLE IF NOT EXISTS interior_features (feature_id int NOT NULL AUTO_INCREMENT, bedrooms varchar(255), bathrooms varchar (255), interiorheating varchar (255), interiorcooling varchar (255), appliances varchar (255), kitchen varchar (255), flooring varchar (255), house_id varchar (255), sqft varchar (255), PRIMARY KEY (feature_id));'
+const featuresTable = 'CREATE TABLE IF NOT EXISTS features (house_id int NOT NULL AUTO_INCREMENT, type varchar(255), year_built int, heating varchar (255), cooling varchar (255), parking varchar (255),lot int, days_on_zillow int, bedrooms float, bathrooms float, interiorheating varchar (255), interiorcooling varchar (255), appliances varchar (255), kitchen varchar (255), flooring varchar (255), sqft int, PRIMARY KEY (house_id));'
 const dbName = 'zillow';
 const mockFeatures = require('./mockFeatures');
 const mockInterior = require('./mockInterior');
 const features = require('./createMockData');
 const fs = require('fs');
+const config = require('../config');
+var db;
 
-  const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'password',
-    multipleStatements: true,
-  });
 
-  db.connect((err) => {
-    if (err) {
-      console.error('error connecting: ' + err);
-    } else {
-      console.log("Connected to database");
-    }
-  });
+  const createConnection = function (cb) {
 
-  const createDatabase = function (cb) {
+    db = mysql.createConnection({
+      host: 'localhost',
+      user: config.username,
+      password: config.password,
+      multipleStatements: true
+    });
+
+    db.connect((err) => {
+      if (err) {
+        console.error('error connecting: ' + err);
+      } else {
+        console.log("Connected to database");
+      }
+    });
+
     //Check for Database creation and Table Creation
     db.query('CREATE DATABASE IF NOT EXISTS ??', dbName, function (err, results) {
       if (err) {
@@ -35,55 +38,38 @@ const fs = require('fs');
             console.log(err);
           } else {
             db.query(featuresTable, function (err, results) {
-              if (err) {
-                console.log(err);
-              } else {
-                db.query(interiorTable, function (err, results) {
-                  if (err) {
-                    console.log(err);
-                  } else {
-                    cb();
-                  }
-                });
-              }
+              cb();
             });
           }
         })
       }
     });
+
+
   }
 
 
   //function to load feature mock data
   const loadFeatures = (callback) => {
     // fs.writeFileSync('/Users/apple/Code/RPT11/zillowclone/database/mockfeature.json', JSON.stringify(features.createFeatures()));
-    mockFeatures.forEach(house => {
-      let sql = 'INSERT into features (type, year_built, heating, cooling, parking, lot, days_on_zillow) VALUES (?,?,?,?,?,?,?)';
-      let params = [house.type, house.year_built, house.heating, house.cooling, house.parking, house.lot, house.days_on_zillow];
-        db.query(sql, params, (err, results) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("mockFeatures loaded", results);
-          }
-        });
-      });
-    };
+    let sql = 'INSERT into features (type, year_built, heating, cooling, parking, lot, days_on_zillow, bedrooms, bathrooms, interiorheating, interiorcooling, appliances, kitchen, flooring, sqft) VALUES ?';
+    let params = [];
+    features.createFeatures().forEach(house => {
 
-    //function to load interior mock JSON data
-  const loadInterior = (callback) => {
-    mockInterior.forEach(feature => {
-      let sql = 'INSERT into interior_features (bedrooms, bathrooms, interiorheating, interiorcooling, appliances, kitchen, flooring, sqft) VALUES (?,?,?,?,?,?,?,?)';
-      let params = [feature.bedrooms, feature.bathrooms, feature.heating, feature.cooling, feature.appliances, feature.kitchen, feature.flooring, feature.sqft];
-        db.query(sql, params, (err, results) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("mockInterior loaded", results);
-          }
-        });
-    });
-  };
+      params.push([house.type, house.year_built, house.heating, house.cooling, house.parking, house.lot, house.days_on_zillow, house.bedrooms, house.bathrooms, house.int_heating, house.int_cooling, house.appliances, house.kitchen, house.flooring, house.sqft]);
+
+      });
+
+      db.query(sql, [params], (err, results) => {
+        if (err) {
+          console.log(err);
+        } else {
+          callback();
+        }
+      });
+
+
+    };
 
   /////////////////////////Retreiving Facts and Features///////////////////////////
   const getFeatures = (id, callback) => {
@@ -98,21 +84,8 @@ const fs = require('fs');
       });
     };
 
-
-    const getInterior = (id, callback) => {
-      let sql = 'select * from interior_features where feature_id = ?';
-      let params = [`${id}`];
-        db.query(sql, params, (err, results) => {
-          if (err) {
-            console.log(err);
-          } else {
-            callback(null, results);
-          }
-        });
-      };
-
   const getBedBaths = (id, callback) => {
-    let sql = 'select feature_id, bedrooms, bathrooms, sqft from interior_features where feature_id = ?';
+    let sql = 'select feature_id, bedrooms, bathrooms, sqft from features where house_id = ?';
     let params = [`${id}`];
       db.query(sql, params, (err, result) => {
         if (err) {
@@ -125,9 +98,7 @@ const fs = require('fs');
 
     module.exports = {
       loadFeatures,
-      loadInterior,
       getFeatures,
-      getInterior,
       getBedBaths,
-      createDatabase
+      createConnection
     };

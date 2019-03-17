@@ -14,10 +14,8 @@ if (process.env.DB = 'mysql') {
 
 module.exports = {
   loadFeatures: DB.loadFeatures,
-  loadInterior: DB.loadInterior,
   getFeatures: DB.getFeatures,
-  getInterior: DB.getInterior,
   getBedBaths: DB.getBedBaths,
-  createDatabase: DB.createDatabase
+  createConnection: DB.createConnection
 };
 

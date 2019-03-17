@@ -5,20 +5,8 @@ const get_random = function (array) {
    } else {
      return array[Math.floor((Math.random()*array.length))];
    }
- }; 
- 
- let interior_features = {
-    appliances: ['Dishwasher','Dryer', 'Garbage disposal', 'Refrigerator', 'Washer'],
-    heating: ['Forced air', 'Fan', 'Speeder air'],
-    cooling: ['None', 'A/C', 'Central'],
-    year_built: function (min,max) {
-     return Math.round(Math.random() * (max-min) + min);
-    },
-    kitchen_features: ['Counter', 'Pantry', 'Updated Kitchen', 'Eat In Kitchen'],
-    flooring: function (min,max) {
-     return Math.round(Math.random() * (max-min) + min)}
  };
- 
+
  let houseFeatures = {
    type: ['Single Family', 'Multifamily', 'Condo', 'Townhome'],
    year_built: function (min,max) {
@@ -30,48 +18,41 @@ const get_random = function (array) {
    lot: function (min,max) {
      return Math.round(Math.random() * (max-min) + min)
     },
-   pricePerSqft: "TBD"
- 
+   appliances: ['Dishwasher','Dryer', 'Garbage disposal', 'Refrigerator', 'Washer'],
+    intHeating: ['Forced air', 'Fan', 'Speeder air'],
+    intCooling: ['None', 'A/C', 'Central'],
+    kitchen_features: ['Counter', 'Pantry', 'Updated Kitchen', 'Eat In Kitchen'],
+    flooring: function (min,max) {
+     return Math.round(Math.random() * (max-min) + min)}
  };
- 
+
  const createFeatures = (callback) => {
    var features = [];
      for (let i = 0; i < 100; i++) {
        features.push({
-         Type: get_random(houseFeatures.type),
-         Year_Built: houseFeatures.year_built(1900,2006),
-         Heating: get_random(houseFeatures.heating),
-         Cooling: get_random(houseFeatures.cooling),
-         Parking: get_random(houseFeatures.parking),
-         Lot: houseFeatures.lot(1000,3000)+' sqft',
-         Price: "hello"
+         type: get_random(houseFeatures.type),
+         year_built: houseFeatures.year_built(1900,2006),
+         heating: get_random(houseFeatures.heating),
+         cooling: get_random(houseFeatures.cooling),
+         parking: get_random(houseFeatures.parking),
+         lot: houseFeatures.lot(1000,3000),
+         bedrooms: Math.round(Math.random() * 4),
+         bathrooms: Math.round(Math.random() * 4),
+         appliances: get_random(houseFeatures.appliances),
+         int_heating: get_random(houseFeatures.intHeating),
+         int_cooling: get_random(houseFeatures.intCooling),
+         kitchen:  get_random(houseFeatures.kitchen_features),
+         flooring: houseFeatures.flooring(1000,3000),
+         sqft: houseFeatures.flooring(1000,3000),
+         days_on_zillow: houseFeatures.flooring(1, 100)
        });
      }
    return features;
  };
- 
- const createInteriorFeatures = (callback) => {
-   var interiorFeatures = [];
-    for (let i = 0; i < 100; i++) {
-       interiorFeatures.push(
-         {
-           Bedrooms: Math.round(Math.random() * 4),
-           Appliances: interior_features.appliances,
-           Year_built: interior_features.year_built(1900,2006),
-           Heating: get_random(interior_features.heating),
-           Kitchen: interior_features.kitchen_features
-         }
-      );
-      
-     }
-  return interiorFeatures;
- };
- 
- 
- 
+
+
 
 module.exports = {
-   createInteriorFeatures,
    createFeatures
 };
 

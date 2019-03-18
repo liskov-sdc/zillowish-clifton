@@ -26,9 +26,10 @@ const get_random = function (array) {
      return Math.round(Math.random() * (max-min) + min)}
  };
 
- const createFeatures = (callback) => {
+ const createFeatures = (numRecords=100) => {
    var features = [];
-     for (let i = 0; i < 100; i++) {
+
+     for (let i = 0; i < numRecords; i++) {
        features.push({
          type: get_random(houseFeatures.type),
          year_built: houseFeatures.year_built(1900,2006),

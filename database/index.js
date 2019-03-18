@@ -16,6 +16,7 @@ module.exports = {
   loadFeatures: DB.loadFeatures,
   getFeatures: DB.getFeatures,
   getBedBaths: DB.getBedBaths,
-  createConnection: DB.createConnection
+  createConnection: DB.createConnection,
+  createParams: DB.createParams
 };
 

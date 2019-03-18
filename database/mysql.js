@@ -48,26 +48,33 @@ var db;
 
   }
 
+  const createParams = (numRecords) => {
+    let params = [];
+    features.createFeatures(numRecords).forEach(house => {
+      params.push([house.type, house.year_built, house.heating, house.cooling, house.parking, house.lot, house.days_on_zillow, house.bedrooms, house.bathrooms, house.int_heating, house.int_cooling, house.appliances, house.kitchen, house.flooring, house.sqft]);
+    });
+
+    return params;
+  }
+
 
   //function to load feature mock data
-  const loadFeatures = (callback) => {
+  const loadFeatures = (callback, numRecords = 100, params = []) => {
     // fs.writeFileSync('/Users/apple/Code/RPT11/zillowclone/database/mockfeature.json', JSON.stringify(features.createFeatures()));
     let sql = 'INSERT into features (type, year_built, heating, cooling, parking, lot, days_on_zillow, bedrooms, bathrooms, interiorheating, interiorcooling, appliances, kitchen, flooring, sqft) VALUES ?';
-    let params = [];
-    features.createFeatures().forEach(house => {
-
-      params.push([house.type, house.year_built, house.heating, house.cooling, house.parking, house.lot, house.days_on_zillow, house.bedrooms, house.bathrooms, house.int_heating, house.int_cooling, house.appliances, house.kitchen, house.flooring, house.sqft]);
-
+    if (params.length === 0) {
+      features.createFeatures(numRecords).forEach(house => {
+        params.push([house.type, house.year_built, house.heating, house.cooling, house.parking, house.lot, house.days_on_zillow, house.bedrooms, house.bathrooms, house.int_heating, house.int_cooling, house.appliances, house.kitchen, house.flooring, house.sqft]);
       });
+    }
 
-      db.query(sql, [params], (err, results) => {
-        if (err) {
-          console.log(err);
-        } else {
-          callback();
-        }
-      });
-
+    db.query(sql, [params], (err, results) => {
+      if (err) {
+        console.log(err);
+      } else {
+        callback();
+      }
+    });
 
     };
 
@@ -85,7 +92,7 @@ var db;
     };
 
   const getBedBaths = (id, callback) => {
-    let sql = 'select feature_id, bedrooms, bathrooms, sqft from features where house_id = ?';
+    let sql = 'select bedrooms, bathrooms, sqft from features where house_id = ?';
     let params = [`${id}`];
       db.query(sql, params, (err, result) => {
         if (err) {
@@ -100,5 +107,6 @@ var db;
       loadFeatures,
       getFeatures,
       getBedBaths,
-      createConnection
+      createConnection,
+      createParams
     };

@@ -9,7 +9,7 @@ const config = require('../test/config');
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'password',
   database: 'zillow'
 });
 
@@ -22,21 +22,13 @@ describe('Testing Database', () => {
       expect(results[0].id).to.equal(13);
       expect(results[0].type).to.be.a('string');
     });
-    
-  });
 
-  it("should have 100 records in the interior_features table", function () {
-    connection.query('SELECT * from interior_features', (err, results) => {
-      console.log(results)
-        expect(results).to.equal(100);
-        done();
-    });
   });
 
   it("should have 100 records in the features table", function () {
     connection.query('SELECT * from features', (err, results) => {
       console.log(results)
-        expect(results).to.equal(100);
+        expect(results).to.be.greaterthan(100);
         done();
     });
   })

@@ -1,5 +1,5 @@
 
-const get_random = function (array) {
+var get_random = function (array) {
    if (array.length < 1) {
      return ''
    } else {
@@ -7,7 +7,7 @@ const get_random = function (array) {
    }
  };
 
- let houseFeatures = {
+var houseFeatures = {
    type: ['Single Family', 'Multifamily', 'Condo', 'Townhome'],
    year_built: function (min,max) {
      return Math.round(Math.random() * (max-min) + min);
@@ -26,7 +26,7 @@ const get_random = function (array) {
      return Math.round(Math.random() * (max-min) + min)}
  };
 
- const createFeatures = (numRecords=100) => {
+ var createFeatures = (numRecords=100) => {
    var features = [];
 
      for (let i = 0; i < numRecords; i++) {
@@ -50,7 +50,6 @@ const get_random = function (array) {
      }
    return features;
  };
-
 
 
 module.exports = {

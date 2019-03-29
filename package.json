@@ -6,9 +6,9 @@
   "scripts": {
     "test": "mocha",
     "build": "webpack -d --watch",
-    "start": "nodemon server/server.js",
-    "db-10M": "node database/create10MRecords.js",
-    "db-seed": "node database/seedDatabase.js"
+    "start": "set DB=postgres && nodemon server/server.js",
+    "db-10M": "set DB=postgres && node database/create10MRecords.js",
+    "db-seed": "set DB=postgres && node database/seedDatabase.js"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +26,7 @@
     "faker": "^4.1.0",
     "mocha": "^6.0.0",
     "mongoose": "^5.4.19",
+    "mongoose-auto-increment": "^5.0.1",
     "mysql": "^2.16.0",
     "pg": "^7.9.0",
     "react": "^16.7.0",

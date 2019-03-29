@@ -50,6 +50,7 @@ var db;
 
   const createParams = (numRecords) => {
     let params = [];
+
     features.createFeatures(numRecords).forEach(house => {
       params.push([house.type, house.year_built, house.heating, house.cooling, house.parking, house.lot, house.days_on_zillow, house.bedrooms, house.bathrooms, house.int_heating, house.int_cooling, house.appliances, house.kitchen, house.flooring, house.sqft]);
     });
@@ -103,9 +104,58 @@ var db;
       });
     };
 
+    var getAllFeatures = (page, callback) => {
+
+    };
+
+    var postFeatures = (features, callback) => {
+      if (isNaN(id)) {
+        callback('no Id to insert', null);
+      }
+      features.house_id = undefined;
+      features = keepOnlyFieldNames(features);
+      featuresTable.upsert(features);
+    };
+
+    var updateFeatures = (id, features, callback) => {
+      if (isNaN(id)) {
+        callback('no Id to insert', null);
+      }
+      features.house_id = id;
+      features = keepOnlyFieldNames(features);
+    };
+
+    var deleteFeatures = (id, callback) => {
+
+    };
+
+    var keepOnlyFieldNames = ({ house_id, type, year_built, heating, cooling, parking, lot, days_on_zillow, bedrooms, bathrooms, interiorheating, interiorcooling, appliances, kitchen, flooring, sqft}) => {
+      return ({
+        house_id,
+        type,
+        year_built,
+        heating,
+        cooling,
+        parking,
+        lot,
+        days_on_zillow,
+        bedrooms,
+        bathrooms,
+        interiorheating,
+        interiorcooling,
+        appliances,
+        kitchen,
+        flooring,
+        sqft});
+    };
+
     module.exports = {
       loadFeatures,
       getFeatures,
+      getAllFeatures,
+      updateFeatures,
+      deleteFeatures,
+      postFeatures,
       getBedBaths,
       createConnection,
       createParams

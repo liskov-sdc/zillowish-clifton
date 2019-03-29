@@ -6,8 +6,9 @@
   "scripts": {
     "test": "mocha",
     "build": "webpack -d --watch",
-    "start": "nodemon server/server.js",
-    "db-seed": "node database/seedDatabase.js"
+    "start": "set DB=postgres && nodemon server/server.js",
+    "db-10M": "set DB=postgres && node database/create10MRecords.js",
+    "db-seed": "set DB=postgres && node database/seedDatabase.js"
   },
   "author": "",
   "license": "ISC",
@@ -24,11 +25,15 @@
     "express": "^4.16.4",
     "faker": "^4.1.0",
     "mocha": "^6.0.0",
+    "mongoose": "^5.4.19",
+    "mongoose-auto-increment": "^5.0.1",
     "mysql": "^2.16.0",
+    "pg": "^7.9.0",
     "react": "^16.7.0",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-dom": "^16.7.0",
     "read-more-react": "^1.0.7",
+    "sequelize": "^5.1.0",
     "styled-components": "^4.1.3"
   },
   "devDependencies": {
@@ -36,7 +41,6 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
-    "db-seed": "^1.2.0",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1"
   }

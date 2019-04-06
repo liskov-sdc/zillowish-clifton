@@ -1,8 +1,7 @@
 module.exports = {
-  database: {
     host: 'localhost',
-    user: 'root',
+    user: 'postgres',
     password: 'password',
-    database: 'zillow'
-  }
+    database: 'zillow',
+    port: 5432
 };

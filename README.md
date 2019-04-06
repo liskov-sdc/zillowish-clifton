@@ -35,15 +35,16 @@ To Seed the Databse:
 
 This will create 100 seeds into the database.
 
-##CRUD API
+## CRUD API
 
-###Get All House Feature Records with Pagination of 100
+### Get All House Feature Records with Pagination of 100
+
 Use the GET endpoint at /house/all with a ?page query variable for different pages of 100 each.
 
-###Get Single House Feature Record
+### Get Single House Feature Record
 Use the GET endpoint at /house/:id where id is the house_id you want.
 
-###Post New House Feature Record
+### Post New House Feature Record
 Use the POST endpoint at /house/ and send all the proper data in a JSON object on the features value pair such as the following:
 
 `
@@ -67,7 +68,7 @@ Use the POST endpoint at /house/ and send all the proper data in a JSON object o
 }
 `
 
-###Update House Feature Record
+### Update House Feature Record
 Use the PUT endpoint at /house/:id where id is the house_id you want and send all the proper data you want updated in a JSON object on the features value pair such as the following:
 
 PUT to /house/1
@@ -79,9 +80,9 @@ PUT to /house/1
 `
 
 
-##SDC Engineering Journal and Notes
+## SDC Engineering Journal and Notes
 
-###Database Benchmarking
+### Database Benchmarking
 
 Which two DBMS did you test?
 SQL: POSTGRE & MySQL
@@ -110,10 +111,11 @@ MONGODB:
 
 Mongo I had an issue with as I needed to auto increment the house_id's myself and could not simultaneously run inserts due to that as the incrementing may mess up.  I needed the house_id's as that would correspond
 
-###Performance notes.
+### Performance notes.
 [TODO]
-###Stress Testing
+### Stress Testing
 [TODO]
-###Other Notes
-[TODO]
+### Other Notes
+
+I noticed something interesting with undefined, I had thought that setting a key to undefined would remove the key from the object and had done so on the house_id field for my insert CRUD operations as a way to sanitize the data comming in as I dont trust the user.  I found out later that undefined does not actually remove the key on the object through some testing of Object.keys and in fact to do this I would need to use the delete keyword on the key.
 

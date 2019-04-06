@@ -190,7 +190,7 @@ var db, featuresTable;
   };
 
   var postFeatures = (features, callback) => {
-    features.house_id = undefined;
+    delete features.house_id;
     features = keepOnlyFieldNames(features);
     featuresTable.upsert(features)
     .then((results) => {

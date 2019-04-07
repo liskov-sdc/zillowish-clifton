@@ -1,16 +1,7 @@
-
-FROM node:8
-
-# Set the working directory to /app
-RUN mkdir /app
-
-ADD . /app
-
-WORKDIR /app
-
+FROM node:10.15.2-alpine
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY . .
 RUN npm install
-
-EXPOSE 3004
-
-CMD ["node", "server/server.js"]
-
+RUN npm install -g nodemon
+CMD [ "npm", "start" ]

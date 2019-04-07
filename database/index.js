@@ -25,6 +25,7 @@ module.exports = {
   getAllFeatures: DB.getAllFeatures,
   postFeatures: DB.postFeatures,
   updateFeatures: DB.updateFeatures,
-  deleteFeatures: DB.deleteFeatures
+  deleteFeatures: DB.deleteFeatures,
+  count: DB.count
 };
 

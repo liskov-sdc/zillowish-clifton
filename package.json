@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "webpack -d --watch",
-    "start": "set DB=postgres && nodemon server/server.js",
+    "start": "set DB=postgres && node database/create10MRecords.js && wait && nodemon server/server.js",
     "db-10M": "set DB=postgres && node database/create10MRecords.js",
     "db-seed": "set DB=postgres && node database/seedDatabase.js"
   },

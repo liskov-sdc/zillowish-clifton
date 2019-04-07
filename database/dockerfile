@@ -1,0 +1,4 @@
+FROM: postgres:11
+    restart: always
+    ports:
+      - "5432:5432"

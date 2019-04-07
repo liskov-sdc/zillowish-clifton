@@ -7,6 +7,7 @@ const fs = require('fs');
 const config = require('../config');
 const Op = Sequelize.Op
 var db, featuresTable;
+var dbCount;
 
 
 
@@ -16,7 +17,7 @@ var db, featuresTable;
       let {Client} = require('pg');
       let postgres = new Client({
         user: config.username,
-        database: dbName,
+        database: 'postgres',
         password: config.password,
         host: 'localhost'
       });
@@ -24,7 +25,15 @@ var db, featuresTable;
       postgres.query(`CREATE DATABASE ${dbName}`, (err) => {
         if (err && !~err.message.indexOf('already exists')) {
           console.log(err);
-        } else {
+        } 
+          postgres.end();
+          postgres = new Client({
+            user: config.username,
+            database: dbName,
+            password: config.password,
+            host: 'localhost'
+          });
+          postgres.connect();
           postgres.query('CREATE TABLE IF NOT EXISTS features (house_id serial PRIMARY KEY, type varchar(255), year_built int, heating varchar (255), cooling varchar (255), parking varchar (255),lot int, days_on_zillow int, bedrooms float, bathrooms float, interiorheating varchar (255), interiorcooling varchar (255), appliances varchar (255), kitchen varchar (255), flooring varchar (255), sqft int);', (err) => {
             console.log(err);
             postgres.end();
@@ -35,8 +44,8 @@ var db, featuresTable;
             });
             createModels();
           });
-        }
-
+        
+        
       });
 
     let createModels =  function () {
@@ -95,8 +104,13 @@ var db, featuresTable;
         }
       }, {timestamps: false});
 
-      cb();
+      featuresTable.count()
+      .then((count)=> {
+        dbCount = count;
+        cb();
+      });
 
+      
       }
 
   }
@@ -227,6 +241,10 @@ var db, featuresTable;
     });
   };
 
+  var count = () => {
+    return dbCount;
+  };
+
   var keepOnlyFieldNames = ({ house_id, type, year_built, heating, cooling, parking, lot, days_on_zillow, bedrooms, bathrooms, interiorheating, interiorcooling, appliances, kitchen, flooring, sqft}) => {
     return ({
       house_id,
@@ -256,5 +274,6 @@ var db, featuresTable;
       postFeatures,
       getBedBaths,
       createConnection,
-      createParams
+      createParams,
+      count
     };

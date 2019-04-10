@@ -17,14 +17,20 @@ From the root directory, run the following:
 `npm run build`
 `npm run start`
 
+Note the npm run start command will put 10 Million records into the postgres database by default if not already there remove the second part of the command if this is not wanted.
+
+config.js file must have the following key value pairs exported:
+module.exports = {username, password, database, host};
+host/password should be set to an environmental variable or 'localhost' in the absense of one.
+
 To choose your Database (MySQL, Postgres, MongoDB):
 
-Note the default is automatically set in database/index.js
+Note the default is automatically set in database/index.js and the start/10-M/seed script commands in package.json.
 
 Set the node DB environmental variable to the following:
 
 mysql for MySQL
-postgres for Postgres
+postgres for Postgres(Default)
 mongo for Mongo
 
 You can do so in Docker or modifying the default environmental variable in the database/index.js file or change the start/10-M/seed script commands.
@@ -34,6 +40,8 @@ To Seed the Databse:
 `npm run db-seed`
 
 This will create 100 seeds into the database.
+
+
 
 ## CRUD API
 

@@ -41,8 +41,6 @@ To Seed the Databse:
 
 This will create 100 seeds into the database.
 
-
-
 ## CRUD API
 
 ### Get All House Feature Records with Pagination of 100
@@ -119,10 +117,22 @@ MONGODB:
 
 Mongo I had an issue with as I needed to auto increment the house_id's myself and could not simultaneously run inserts due to that as the incrementing may mess up.  I needed the house_id's as that would correspond
 
-### Performance notes.
-[TODO]
 ### Stress Testing
-[TODO]
+
+Development
+I utilized K6 and New Relic to do the performance stress testing on both my proxy and my service.  Unoptomized my proxy was able to handle between 1200 and 2500 requests per second while my serice was able to handle around 800 requests per second.  I implemented SSR which in essence is a client side loading performance increase, but that reduced my proxy server to around 400 requests per second.  I also did a series of full app tests using a batch request in K6 that is similar to the way a browser works(this was without SSR implemented yet), but was able to get around 400 requests per second.  On the service side I tested several of my api request including post, get, put, and get 100(pagination) records of those my get 100 requests were the slowest at 296 requests per second.  I will use this for further performance testing to see if I can get to 10k requests per second.
+
+### Performance notes.
+
+Server Side Rendering
+
+I implemented Server Side Rendering and Redis,  Server Side Rendering will improve performance on the client, but will slow down the proxy server as the stress testing showed after implementing Server Side rendering which went down from 1000 -2200 requests per second to around 300-400 requests per second(RPS).
+
+Redis
+
+After implementing SSR I used Redis as an LRU cache for the generated pages to increase the performance of the server.  Although on initial testing on over a million records, I did not see much if any improvement in the real world there will be a selection of pages on the server that would be much more popular than the others, so I limited the selection down to 50,000(the size of my LRU cache so that the memory can fit on a t2 mirco).  Upon getting the pages in the cache it tripled the amount of RPS to around 1200 for the pages in the cache.  One line of reasoning is implementing GZip on my Express Servers and if done correctly I may be able to increase the size of the Cache from 50,000 to maybe 1,000,000.
+
+
 ### Other Notes
 
 I noticed something interesting with undefined, I had thought that setting a key to undefined would remove the key from the object and had done so on the house_id field for my insert CRUD operations as a way to sanitize the data comming in as I dont trust the user.  I found out later that undefined does not actually remove the key on the object through some testing of Object.keys and in fact to do this I would need to use the delete keyword on the key.

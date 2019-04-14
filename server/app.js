@@ -27,14 +27,12 @@ app.get('/house/all', (req, res) => {
 });
 
 app.get('/house/:id', (req, res) => {
-  console.time('read')
   data.getFeatures(req.params.id, (err, data) => {
     if (err) {
       console.log(err);
       res.status(400).send(err);
     } else {
-      console.log(`The total time it took to look up a record with id, ${req.params.id}, in ${process.env.DB.trim()} was:`)
-      console.timeEnd('read');
+      console.log('this is data:',data);
       res.status(200).send(data);
     }
   });
@@ -48,14 +46,12 @@ app.post('/house/', (req, res) => {
       message: 'features are required'
     });
   }
-  console.time('write');
+
   data.postFeatures(req.body.features, (err, data) => {
     if (err) {
       console.log(err);
       res.status(400).send(err);
     } else {
-      console.log(`The total time it took to look up a record with id, ${req.params.id}, in ${process.env.DB.trim()} was:`)
-      console.timeEnd('write');
       res.status(200).send(data);
     }
   });
@@ -69,14 +65,12 @@ app.put('/house/:id', (req, res) => {
       message: 'features are required'
     });
   }
-  console.time('read');
   data.updateFeatures(req.params.id, req.body.features, (err, data) => {
     if (err) {
       console.log(err);
       res.status(400).send(err);
     } else {
-      console.log(`The total time it took to look up a record with id, ${req.params.id}, in ${process.env.DB.trim()} was:`)
-      console.timeEnd('read');
+      console.log('updated record')
       res.status(200).send(data);
     }
   });

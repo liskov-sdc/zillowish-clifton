@@ -19,7 +19,7 @@ var dbCount;
         user: config.username,
         database: 'postgres',
         password: config.password,
-        host: 'localhost'
+        host: config.host
       });
       postgres.connect();
       postgres.query(`CREATE DATABASE ${dbName}`, (err) => {
@@ -31,7 +31,7 @@ var dbCount;
             user: config.username,
             database: dbName,
             password: config.password,
-            host: 'localhost'
+            host: config.host
           });
           postgres.connect();
           postgres.query('CREATE TABLE IF NOT EXISTS features (house_id serial PRIMARY KEY, type varchar(255), year_built int, heating varchar (255), cooling varchar (255), parking varchar (255),lot int, days_on_zillow int, bedrooms float, bathrooms float, interiorheating varchar (255), interiorcooling varchar (255), appliances varchar (255), kitchen varchar (255), flooring varchar (255), sqft int);', (err) => {
@@ -39,7 +39,7 @@ var dbCount;
             postgres.end();
             db = new Sequelize(dbName, config.username, config.password, {
               dialect: 'postgres',
-              host: 'localhost',
+              host: config.host,
               logging: false
             });
             createModels();
@@ -204,9 +204,8 @@ var dbCount;
   };
 
   var postFeatures = (features, callback) => {
-    delete features.house_id;
-    features = keepOnlyFieldNames(features);
-    featuresTable.upsert(features)
+    features.house_id = null;
+    featuresTable.create(features)
     .then((results) => {
       callback(null, results);
     }).catch((err) => {
@@ -220,8 +219,7 @@ var dbCount;
       return;
     }
     features.house_id = id;
-    features = keepOnlyFieldNames(features);
-    featuresTable.upsert(features)
+    featuresTable.update(features, {where: {house_id: id}})
     .then((results) => {
       callback(null, results);
     }).catch((err) => {
@@ -243,26 +241,6 @@ var dbCount;
 
   var count = () => {
     return dbCount;
-  };
-
-  var keepOnlyFieldNames = ({ house_id, type, year_built, heating, cooling, parking, lot, days_on_zillow, bedrooms, bathrooms, interiorheating, interiorcooling, appliances, kitchen, flooring, sqft}) => {
-    return ({
-      house_id,
-      type,
-      year_built,
-      heating,
-      cooling,
-      parking,
-      lot,
-      days_on_zillow,
-      bedrooms,
-      bathrooms,
-      interiorheating,
-      interiorcooling,
-      appliances,
-      kitchen,
-      flooring,
-      sqft});
   };
 
     module.exports = {

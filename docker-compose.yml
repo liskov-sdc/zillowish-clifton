@@ -5,7 +5,7 @@ services:
     restart: always
     environment:
       NODE_ENV: production
-      DB_HOST:  ec2-13-57-238-192.us-west-1.compute.amazonaws.com
+      DB_HOST:  ec2-13-57-52-59.us-west-1.compute.amazonaws.com
     ports:
-      - "3001:80"
+      - "80:3003"
 

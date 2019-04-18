@@ -6,6 +6,6 @@ export const options = {
 }
 
 export default function() {
-    let randomInt = Math.floor(Math.random() * (100000 - 90000)) + 90000;
+    let randomInt = Math.floor(Math.random() * (100000 - 80000)) + 80000;
     http.get("http://localhost:3003/house/all?page=" + randomInt);
 };

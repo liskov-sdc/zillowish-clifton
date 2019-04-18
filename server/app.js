@@ -3,6 +3,9 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const data = require('../database/index');
+var redis = require('redis').createClient();
+var lru = require('redis-lru');
+var readCache = lru(redis, {max: 2000000});
 
 data.createConnection(()=>{});
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -13,29 +16,40 @@ app.use('/:id', express.static(__dirname+'/../client/dist'));
 
 //To do Create getAllFeatures
 app.get('/house/all', (req, res) => {
-  console.time('read')
-  data.getAllFeatures(req.query.page, (err, data) => {
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-    } else {
-      console.log(`The total time it took to look up a record with id, ${req.params.id}, in ${process.env.DB.trim()} was:`)
-      console.timeEnd('read');
-      res.status(200).send(data);
-    }
+  let promise = readCache.getOrSet('page'+req.query.page, () =>{
+    return data.getAllFeatures(req.query.page, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send(err);
+      } else {
+        return data;
+      }
+    });
+  }, 1000000);
+
+  promise.then((data) =>{
+    res.status(200).send(data);
+  }).catch((error) =>{
+    console.log(error)
   });
 });
 
 app.get('/house/:id', (req, res) => {
-  data.getFeatures(req.params.id, (err, data) => {
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-    } else {
-      console.log('this is data:',data);
-      res.status(200).send(data);
-    }
+  let promise = readCache.getOrSet(req.params.id, ()=>{
+    return data.getFeatures(req.params.id, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send(err);
+      } else {
+        return data;
+      }
+    });
   });
+
+  promise.then((data)=>{
+    res.status(200).send(data);
+  });
+
 });
 
 //To do Create postFeatures

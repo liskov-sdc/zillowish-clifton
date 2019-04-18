@@ -160,12 +160,12 @@ var dbCount;
 
   /////////////////////////Retreiving Facts and Features///////////////////////////
   var getFeatures = (id, callback) => {
-      featuresTable.findAll({
+      return featuresTable.findAll({
         where: {
           house_id: id
         }
       }).then((results) => {
-          callback(null, results);
+          return callback(null, results);
       }).catch((err) => {
         callback(err, null);
       });
@@ -188,7 +188,7 @@ var dbCount;
   };
 
   var getAllFeatures = (page = 1, callback) => {
-    featuresTable.findAll({
+    return featuresTable.findAll({
       order: [['house_id', 'ASC']],
       limit: 100,
       where: {
@@ -197,7 +197,7 @@ var dbCount;
         }
       }
     }).then((results) => {
-        callback(null, results);
+        return callback(null, results);
     }).catch((err) => {
       callback(err, null);
     });

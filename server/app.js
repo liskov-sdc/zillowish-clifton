@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const data = require('../database/index');
 var redis = require('redis').createClient();
 var lru = require('redis-lru');
-var readCache = lru(redis, {max: 2000000});
+var readCache = lru(redis, {max: 1000000});
 
 data.createConnection(()=>{});
 app.use(bodyParser.urlencoded({ extended: false }));

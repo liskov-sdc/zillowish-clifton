@@ -15,8 +15,8 @@ app.use('/', express.static(__dirname+'/../client/dist'));
 app.use('/:id', express.static(__dirname+'/../client/dist'));
 
 //To do Create getAllFeatures
-app.get('/house/all', (req, res) => {
-  let promise = readCache.getOrSet('page'+req.query.page, () =>{
+app.get('/house/all/:id', (req, res) => {
+  let promise = readCache.getOrSet('page'+req.params.id, () =>{
     return data.getAllFeatures(req.query.page, (err, data) => {
       if (err) {
         console.log(err);
@@ -32,6 +32,30 @@ app.get('/house/all', (req, res) => {
   }).catch((error) =>{
     console.log(error)
   });
+});
+
+app.get('/house/all', (req, res) => {
+  if (!req.query.page) {
+    let promise = readCache.getOrSet('page1', () =>{
+    return data.getAllFeatures(req.query.page, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send(err);
+      } else {
+        return data;
+      }
+    });
+  }, 1000000);
+
+    promise.then((data) =>{
+      res.status(200).send(data);
+    }).catch((error) =>{
+      console.log(error)
+    });
+  } else {
+    res.redirect('/house/all/' + req.query.page);
+  }
+
 });
 
 app.get('/house/:id', (req, res) => {

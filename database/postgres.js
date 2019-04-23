@@ -109,7 +109,7 @@ let postgres = new Client({
 
   var getAllFeatures = (page = 1, callback) => {
     let valuesToSkip = (100*(page-1))
-    return postgres.query('Select bedrooms, bathrooms, sqft from features  where house_id > $1 ORDER BY house_id ASC LIMIT 100',[valuesToSkip])
+    return postgres.query('Select * from features  where house_id > $1 ORDER BY house_id ASC LIMIT 100',[valuesToSkip])
     .then((results) => {
         return callback(null, results.rows);
     }).catch((err) => {

@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const data = require('../database/index');
-var redis = require('redis').createClient();
+var redis = require('redis').createClient({port: 6739, host: "172.31.22.186"});
 var lru = require('redis-lru');
 var readCache = lru(redis, {max: 1000000});
 

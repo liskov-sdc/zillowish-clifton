@@ -3,10 +3,10 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const data = require('../database/index');
-var redis = require('redis').createClient({port: 6739, host: "172.31.22.186"});
-var lru = require('redis-lru');
-var readCache = lru(redis, {max: 1000000});
-
+var redis = require('redis').createClient(6736, '172.31.22.186');
+redis.on('connect', function() {
+  console.log('connected to redis.');
+});
 data.createConnection(()=>{});
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -16,41 +16,39 @@ app.use('/:id', express.static(__dirname+'/../client/dist'));
 
 //To do Create getAllFeatures
 app.get('/house/all/:id', (req, res) => {
-  let promise = readCache.getOrSet('page'+req.params.id, () =>{
-    return data.getAllFeatures(req.query.page, (err, data) => {
-      if (err) {
-        console.log(err);
-        res.status(400).send(err);
-      } else {
-        return data;
-      }
-    });
-  }, 1000000);
-
-  promise.then((data) =>{
-    res.status(200).send(data);
-  }).catch((error) =>{
-    console.log(error)
+  redis.get('key-page-'+req.params.id, (err, reply) =>{
+    if (reply) {
+      res.send(reply);
+    } else {
+      data.getAllFeatures(req.params.id, (err, data) => {
+        if (err) {
+          console.log(err);
+          res.status(400).send(err);
+        } else {
+          res.json(data);
+          redis.set('key-page-' + req.params.id, JSON.stringify(data));
+        }
+      });
+    }
   });
 });
 
 app.get('/house/all', (req, res) => {
   if (!req.query.page) {
-    let promise = readCache.getOrSet('page1', () =>{
-    return data.getAllFeatures(req.query.page, (err, data) => {
-      if (err) {
-        console.log(err);
-        res.status(400).send(err);
+    redis.get('key-page-'+req.params.id, (err, reply) =>{
+      if (reply) {
+        res.send(reply);
       } else {
-        return data;
+        data.getAllFeatures(req.params.id, (err, data) => {
+          if (err) {
+            console.log(err);
+            res.status(400).send(err);
+          } else {
+            res.json(data);
+            redis.set('key-page-' + req.params.id, JSON.stringify(data));
+          }
+        });
       }
-    });
-  }, 1000000);
-
-    promise.then((data) =>{
-      res.status(200).send(data);
-    }).catch((error) =>{
-      console.log(error)
     });
   } else {
     res.redirect('/house/all/' + req.query.page);
@@ -59,19 +57,20 @@ app.get('/house/all', (req, res) => {
 });
 
 app.get('/house/:id', (req, res) => {
-  let promise = readCache.getOrSet(req.params.id, ()=>{
-    return data.getFeatures(req.params.id, (err, data) => {
-      if (err) {
-        console.log(err);
-        res.status(400).send(err);
-      } else {
-        return data;
-      }
-    });
-  });
-
-  promise.then((data)=>{
-    res.status(200).send(data);
+  redis.get('key-house-'+req.params.id, (err, reply) =>{
+    if (reply) {
+      res.send(reply);
+    } else {
+      data.getFeatures(req.params.id, (err, data) => {
+        if (err) {
+          console.log(err);
+          res.status(400).send(err);
+        } else {
+          res.json(data[0]);
+          redis.set('key-house-' + req.params.id, JSON.stringify(data));
+        }
+      });
+    }
   });
 
 });

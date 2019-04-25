@@ -3,7 +3,13 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const data = require('../database/index');
-var redis = require('redis').createClient(6736, '172.31.22.186');
+var RedisCluster = require('redis-cluster').poorMansClusterClient;
+var cluster = [
+  {name: 'redis01', link: '172.31.18.14:6379', slots: [   0, 8192], options: {max_attempts: 5, password: process.env.REDISPW}},
+  {name: 'redis02', link: '172.31.25.169:6379', slots: [8193, 16834], options: {max_attempts: 5, password: process.env.REDISPW}}
+];
+var redis = RedisCluster(cluster);
+
 redis.on('connect', function() {
   console.log('connected to redis.');
 });
@@ -66,7 +72,7 @@ app.get('/house/:id', (req, res) => {
           console.log(err);
           res.status(400).send(err);
         } else {
-          res.json(data[0]);
+          res.json(data);
           redis.set('key-house-' + req.params.id, JSON.stringify(data));
         }
       });

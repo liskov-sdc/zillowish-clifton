@@ -3,16 +3,17 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const data = require('../database/index');
-var RedisCluster = require('redis-cluster').poorMansClusterClient;
-var cluster = [
-  {name: 'redis01', link: '172.31.18.14:6379', slots: [   0, 8192], options: {max_attempts: 5, password: process.env.REDISPW}},
-  {name: 'redis02', link: '172.31.25.169:6379', slots: [8193, 16834], options: {max_attempts: 5, password: process.env.REDISPW}}
-];
-var redis = RedisCluster(cluster);
+var redis1 = require('redis').createClient({host: rocess.env.REDISHOST1, port: 6379, password: process.env.REDISPW});
+var redis2 = require('redis').createClient({host: rocess.env.REDISHOST2, port: 6379, password: process.env.REDISPW});
 
-redis.on('connect', function() {
-  console.log('connected to redis.');
-});
+var redisCluster = [redis1, redis2];
+
+redisCluster.forEach(function (redis, index, collection) {
+  redis.on('connect', function() {
+    console.log(`connected to redis server ${index}.`);
+  });
+})
+
 data.createConnection(()=>{});
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -22,7 +23,8 @@ app.use('/:id', express.static(__dirname+'/../client/dist'));
 
 //To do Create getAllFeatures
 app.get('/house/all/:id', (req, res) => {
-  redis.get('key-page-'+req.params.id, (err, reply) =>{
+  let redisServer = req.params.id % redisCluster.length;
+  redisCluster[redisServer].get('key-page-'+req.params.id, (err, reply) =>{
     if (reply) {
       res.send(reply);
     } else {
@@ -32,7 +34,7 @@ app.get('/house/all/:id', (req, res) => {
           res.status(400).send(err);
         } else {
           res.json(data);
-          redis.set('key-page-' + req.params.id, JSON.stringify(data));
+          redisCluster[redisServer].set('key-page-' + req.params.id, JSON.stringify(data));
         }
       });
     }
@@ -41,7 +43,9 @@ app.get('/house/all/:id', (req, res) => {
 
 app.get('/house/all', (req, res) => {
   if (!req.query.page) {
-    redis.get('key-page-'+req.params.id, (err, reply) =>{
+    let redisServer = req.params.id % redisCluster.length;
+
+    redisCluster[redisServer].get('key-page-'+req.params.id, (err, reply) =>{
       if (reply) {
         res.send(reply);
       } else {
@@ -51,7 +55,7 @@ app.get('/house/all', (req, res) => {
             res.status(400).send(err);
           } else {
             res.json(data);
-            redis.set('key-page-' + req.params.id, JSON.stringify(data));
+            redisCluster[redisServer].set('key-page-' + req.params.id, JSON.stringify(data));
           }
         });
       }
@@ -63,7 +67,9 @@ app.get('/house/all', (req, res) => {
 });
 
 app.get('/house/:id', (req, res) => {
-  redis.get('key-house-'+req.params.id, (err, reply) =>{
+  let redisServer = req.params.id % redisCluster.length;
+
+  redisCluster[redisServer].get('key-house-'+req.params.id, (err, reply) =>{
     if (reply) {
       res.send(reply);
     } else {
@@ -72,8 +78,8 @@ app.get('/house/:id', (req, res) => {
           console.log(err);
           res.status(400).send(err);
         } else {
-          res.json(data);
-          redis.set('key-house-' + req.params.id, JSON.stringify(data));
+          res.json(data[0]);
+          redisCluster[redisServer].set('key-house-' + req.params.id, JSON.stringify(data[0]));
         }
       });
     }

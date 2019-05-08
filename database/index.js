@@ -17,14 +17,12 @@ if (process.env.DB.trim() === 'mysql') {
 
 
 module.exports = {
-  loadFeatures: DB.loadFeatures,
   getFeatures: DB.getFeatures,
   getBedBaths: DB.getBedBaths,
   createConnection: DB.createConnection,
   createParams: DB.createParams,
   getAllFeatures: DB.getAllFeatures,
   postFeatures: DB.postFeatures,
-  updateFeatures: DB.updateFeatures,
-  deleteFeatures: DB.deleteFeatures
+  count: DB.count
 };
 

@@ -77,4 +77,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('facts'))
+ReactDOM.hydrate(<App />, document.getElementById('facts'))

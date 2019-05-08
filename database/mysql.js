@@ -112,7 +112,7 @@ var db;
       if (isNaN(id)) {
         callback('no Id to insert', null);
       }
-      features.house_id = undefined;
+      delete features.house_id;
       features = keepOnlyFieldNames(features);
       featuresTable.upsert(features);
     };

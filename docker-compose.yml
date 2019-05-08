@@ -1,12 +1,11 @@
-version: '3'
-
+version: "3"
 services:
-
-  mysql-dev:
-    image: mysql:5.7.25
+  app:
+    build: .
+    restart: always
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: zillow
-
+      NODE_ENV: production
+      DB_HOST:  ec2-13-57-52-59.us-west-1.compute.amazonaws.com
     ports:
-      - "3306:3306"  
+      - "80:3003"
+
